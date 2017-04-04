@@ -38,6 +38,7 @@ if(isset($_POST['show']))
     $tableau .= "<th>ID</th>";
     $tableau .= '<th>Nom</th>';
     $tableau .= '<th>Image</th>';
+    $tableau .= '<th>Supprimer</th>';
 
     foreach($products as $product)
     {
@@ -45,10 +46,24 @@ if(isset($_POST['show']))
         $tableau .= '<td>'.$product->getId().'</td>';
         $tableau .= '<td>'.$product->getName().'</td>';
         $tableau .= '<td><img src="asset/images/'.$product->getImage().'" alt="'.$product->getImage().'" height="150" width="150"></td>';
+        $tableau .= '<form action="#" method="post">';
+        $tableau .= '<td><input type="hidden" name="productId" value="'.$product->getId().'" />';
+        $tableau .= '<input type="submit" name="del" value="Delete" />';
+        $tableau .= '</form></td>';
         $tableau .= '</tr>';
 
     }
     $tableau .= '</table>';
+}
+
+if(isset($_POST['del']))
+{
+    $productRepository = $entityManager->getRepository("Imie\Entity\Product");
+    $oneProduct = $productRepository->findOneBy(['id' => $_POST['productId']]);
+
+    $entityManager->remove($oneProduct);
+    $entityManager->flush();
+    var_dump($oneProduct);
 }
 
 ?>
