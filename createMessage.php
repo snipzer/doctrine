@@ -18,5 +18,5 @@ try
 }
 catch(Exception $e)
 {
-    $e->getMessage();
+    echo $e->getMessage();
 }

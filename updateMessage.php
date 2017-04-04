@@ -8,7 +8,7 @@ $messageName = $argv[2];
 try
 {
     $messageRepository = $entityManager->getRepository("Imie\Entity\Message");
-    $message = $messageRepository->find($messageId);
+    $message = $messageRepository->findOneBy(["id" => $messageId]);
 
     $message->setName($messageName);
 
@@ -18,6 +18,6 @@ try
 }
 catch(Exception $e)
 {
-    $e->getMessage();
+    echo $e->getMessage();
 }
 ?>
