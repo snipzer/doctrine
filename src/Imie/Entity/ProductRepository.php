@@ -25,12 +25,17 @@ class ProductRepository extends EntityRepository
 
         $dql = 'SELECT p ';
         $dql .= 'FROM Imie\\Entity\\Product p ';
-        $dql .= 'WHERE p.name like ?1 ';
+        $dql .= 'WHERE p.name like :name ';
         $dql .= 'ORDER BY p.name ASC';
 
-        $results = $entityManager->createQuery($dql)->setParameter(1, '%'.$search.'%')->getResult();
+        $results = $entityManager->createQuery($dql)->setParameter(":name", '%'.$search.'%')->getResult();
 
         return $results;
+    }
+
+    public function getProductByName()
+    {
+        return $this->createQueryBuilder('p')->orderBy('p.name')->getQuery()->getResult();
     }
 }
 ?>
