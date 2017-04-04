@@ -63,7 +63,6 @@ if(isset($_POST['del']))
 
     $entityManager->remove($oneProduct);
     $entityManager->flush();
-    var_dump($oneProduct);
 }
 
 ?>
