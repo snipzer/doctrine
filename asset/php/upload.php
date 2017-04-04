@@ -50,7 +50,6 @@ if (isset($_FILES['fileToUpload']))
     }
     else
     {
-        var_dump($target_file);
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
         {
             echo "File uploaded";
