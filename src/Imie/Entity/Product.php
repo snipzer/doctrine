@@ -4,7 +4,7 @@ namespace Imie\Entity;
 
 /**
  * @Table
- * @Entity
+ * @Entity(repositoryClass="ProductRepository")
  */
 
 class Product
