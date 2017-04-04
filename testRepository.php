@@ -6,8 +6,8 @@ use Imie\Entity\Product;
 try
 {
     $ProductRepository = $entityManager->getRepository("Imie\Entity\Product");
-    $toto = $ProductRepository->getProductsOrderedByName();
-
+    //$toto = $ProductRepository->getProductsOrderedByName();
+    $toto = $ProductRepository->getProductsOrderedByNameWithLike("product");
     echo "<pre>";
     var_dump($toto);
     echo "</pre>";
