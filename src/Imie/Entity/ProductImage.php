@@ -20,7 +20,7 @@ class ProductImage
     protected $name;
 
     /**
-     * @OneToOne(targetEntity="Imie\Entity\Image")
+     * @OneToOne(targetEntity="Imie\Entity\Image", cascade={"persist", "remove"})
      * @JoinColumn(nullable = false)
      */
     private $image;
