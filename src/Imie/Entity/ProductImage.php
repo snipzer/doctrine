@@ -25,11 +25,6 @@ class ProductImage
      */
     private $image;
 
-    public function __destruct()
-    {
-        unset($this->image);
-    }
-
     public function getId()
     {
         return $this->id;
