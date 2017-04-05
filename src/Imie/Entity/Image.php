@@ -28,6 +28,11 @@ class Image
      */
     protected $height;
 
+    /**
+     * @OneToOne(targetEntity="ProductImage", inversedBy="image")
+     */
+    private $product;
+
     public function __construct($width = "150px", $height = "150px")
     {
         $this->setHeight($height);
@@ -72,6 +77,17 @@ class Image
     public function setHeight($height)
     {
         $this->height = $height;
+    }
+
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    public function setProduct(ProductImage $product)
+    {
+        $this->product = $product;
+        $product->setImage($this);
     }
 
 }

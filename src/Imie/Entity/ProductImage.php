@@ -20,7 +20,7 @@ class ProductImage
     protected $name;
 
     /**
-     * @OneToOne(targetEntity="Imie\Entity\Image", cascade={"persist", "remove"})
+     * @OneToOne(targetEntity="Imie\Entity\Image", cascade={"persist", "remove"}, mappedBy="product")
      * @JoinColumn(nullable = false)
      */
     private $image;
@@ -53,8 +53,8 @@ class ProductImage
     public function setImage(Image $image = null)
     {
         $this->image = $image;
+        $image->setProduct($this);
     }
-
 
 }
 ?>
