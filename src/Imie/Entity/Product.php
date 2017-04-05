@@ -5,6 +5,7 @@ namespace Imie\Entity;
 /**
  * @Table
  * @Entity(repositoryClass="ProductRepository")
+ * @HasLifeCycleCallbacks()
  */
 
 class Product
@@ -61,6 +62,14 @@ class Product
         $str .= "]";
 
         return $str;
+    }
+
+    /**
+     * @postRemove
+     */
+    public function removeImage()
+    {
+        unlink("asset/images/".$this->image);
     }
 
 }
