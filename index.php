@@ -10,8 +10,6 @@ if(isset($_POST['submit']))
     $productImage = $_POST['productImage'];
     $image = $_FILES['fileToUpload'];
 
-    include(BASE_DIR."/asset/php/upload.php");
-
     try
     {
         $product = new Product();
