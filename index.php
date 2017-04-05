@@ -1,10 +1,10 @@
 <?php
-define("BASE_DIR", __DIR__ ."/");
+define("BASE_DIR", __DIR__ . "/");
 
 require_once "bootstrap.php";
 use Imie\Entity\Product;
 
-if(isset($_POST['submit']))
+if (isset($_POST['submit']))
 {
     $productName = $_POST['productName'];
     $productImage = $_POST['productImage'];
@@ -21,48 +21,62 @@ if(isset($_POST['submit']))
 
         $msg = "Created Product with ID " . $product->getId() . "\n";
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
         $e->getMessage();
     }
 }
 
-if(isset($_POST['show']))
+if (isset($_POST['show']))
 {
-    $productRepository = $entityManager->getRepository("Imie\Entity\Product");
-    $products = $productRepository->findAll();
-
-    $tableau = '<table border="2" cellpading="5px" cellspacing="5px">';
-    $tableau .= "<th>ID</th>";
-    $tableau .= '<th>Nom</th>';
-    $tableau .= '<th>Image</th>';
-    $tableau .= '<th>Supprimer</th>';
-
-    foreach($products as $product)
+    try
     {
-        $tableau .= '<tr>';
-        $tableau .= '<td>'.$product->getId().'</td>';
-        $tableau .= '<td>'.$product->getName().'</td>';
-        $tableau .= '<td><img src="asset/images/'.$product->getImage().'" alt="'.$product->getImage().'" height="150" width="150"></td>';
-        $tableau .= '<form action="#" method="post">';
-        $tableau .= '<td><input type="hidden" name="productId" value="'.$product->getId().'" />';
-        $tableau .= '<input type="submit" name="del" value="Delete" />';
-        $tableau .= '</form></td>';
-        $tableau .= '</tr>';
+        $productRepository = $entityManager->getRepository("Imie\Entity\Product");
+        $products = $productRepository->findAll();
 
+
+        $tableau = '<table border="2" cellpading="5px" cellspacing="5px">';
+        $tableau .= "<th>ID</th>";
+        $tableau .= '<th>Nom</th>';
+        $tableau .= '<th>Image</th>';
+        $tableau .= '<th>Supprimer</th>';
+
+        foreach ($products as $product)
+        {
+            $tableau .= '<tr>';
+            $tableau .= '<td>' . $product->getId() . '</td>';
+            $tableau .= '<td>' . $product->getName() . '</td>';
+            $tableau .= '<td><img src="asset/images/' . $product->getImage() . '" alt="' . $product->getImage() . '" height="150" width="150"></td>';
+            $tableau .= '<form action="#" method="post">';
+            $tableau .= '<td><input type="hidden" name="productId" value="' . $product->getId() . '" />';
+            $tableau .= '<input type="submit" name="del" value="Delete" />';
+            $tableau .= '</form></td>';
+            $tableau .= '</tr>';
+
+        }
+        $tableau .= '</table>';
     }
-    $tableau .= '</table>';
+    catch (Exception $e)
+    {
+        echo $e->getMessage();
+    }
 }
 
-if(isset($_POST['del']))
+if (isset($_POST['del']))
 {
-    $productRepository = $entityManager->getRepository("Imie\Entity\Product");
-    $oneProduct = $productRepository->findOneBy(['id' => $_POST['productId']]);
+    try
+    {
+        $productRepository = $entityManager->getRepository("Imie\Entity\Product");
+        $oneProduct = $productRepository->findOneBy(['id' => $_POST['productId']]);
 
-    $entityManager->remove($oneProduct);
-    $entityManager->flush();
+        $entityManager->remove($oneProduct);
+        $entityManager->flush();
+    }
+    catch(Exception $e)
+    {
+        echo $e->getMessage();
+    }
 }
-
 ?>
 
 
@@ -76,25 +90,25 @@ if(isset($_POST['del']))
     <title>Document</title>
 </head>
 <body>
-    <section>
-        <article>
-            <form action="#" method="post" enctype="multipart/form-data">
-                <p>Nom du nouveau produit:<input type="text" name="productName" required /></p>
-                <p>Nouveau nom de l'image:<input type="text" name="productImage" required /></p>
-                <p>Image à uploader:<input type="file" name="fileToUpload" /></p>
-                <input type="submit" name="submit" value="Submit" />
-            </form>
-        </article>
-        <article>
-            <h2>Show product:</h2>
-            <form action="#" method="post">
-                <input type="submit" name="show" value="show" />
-            </form>
-        </article>
-        <article>
-            <?php if(isset($msg)){echo $msg;} ?>
-        </article>
-        <?php if(isset($tableau)){echo $tableau;}?>
-    </section>
+<section>
+    <article>
+        <form action="#" method="post" enctype="multipart/form-data">
+            <p>Nom du nouveau produit:<input type="text" name="productName" required/></p>
+            <p>Nouveau nom de l'image:<input type="text" name="productImage" required/></p>
+            <p>Image à uploader:<input type="file" name="fileToUpload"/></p>
+            <input type="submit" name="submit" value="Submit"/>
+        </form>
+    </article>
+    <article>
+        <h2>Show product:</h2>
+        <form action="#" method="post">
+            <input type="submit" name="show" value="show"/>
+        </form>
+    </article>
+    <article>
+        <?php if (isset($msg)){ echo $msg;} ?>
+    </article>
+    <?php if (isset($tableau)){ echo $tableau;} ?>
+</section>
 </body>
 </html>
