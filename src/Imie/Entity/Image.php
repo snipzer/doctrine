@@ -27,9 +27,14 @@ class Image
      * @Column(type="string", length=10)
      */
     protected $height;
+//
+//    /**
+//     * @OneToOne(targetEntity="ProductImage", inversedBy="image")
+//     */
+//    private $product;
 
     /**
-     * @OneToOne(targetEntity="ProductImage", inversedBy="image")
+     * @ManyToOne(targetEntity="ProductImage", inversedBy="images")
      */
     private $product;
 

@@ -1,11 +1,13 @@
 <?php
+
 namespace Imie\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Table(name="productImage")
  * @Entity
  */
-
 class ProductImage
 {
     /**
@@ -19,11 +21,22 @@ class ProductImage
      */
     protected $name;
 
+//    /**
+//     * @OneToOne(targetEntity="Imie\Entity\Image", cascade={"persist", "remove"}, mappedBy="product")
+//     * @JoinColumn(nullable = false)
+//     */
+//    private $image;
+
+
     /**
-     * @OneToOne(targetEntity="Imie\Entity\Image", cascade={"persist", "remove"}, mappedBy="product")
-     * @JoinColumn(nullable = false)
+     * @OneToMany(targetEntity="Image", mappedBy="product")
      */
-    private $image;
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -45,16 +58,22 @@ class ProductImage
         $this->name = $name;
     }
 
-    public function getImage()
+    public function getImages()
     {
-        return $this->image;
+        return $this->images;
     }
 
-    public function setImage(Image $image = null)
+    public function setImage(Image $image)
     {
-        $this->image = $image;
         $image->setProduct($this);
+        $this->images[] = $image;
+        return $this;
     }
 
+    public function removeImage(Image $image)
+    {
+        $this->images->remove($image);
+    }
 }
+
 ?>
